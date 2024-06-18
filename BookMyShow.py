@@ -67,7 +67,31 @@ def view_bookings(index, movies, booked):
             print(seat, end=' ')
         print()
 
+def generate_pie_chart(movie):
+    labels = ['Available Seats', 'Booked Seats']
+    sizes = [movie['available_seats'], 100 - movie['available_seats']]
+    colors = ['lightgreen', 'lightcoral']
+    explode = (0.1, 0)
+    plt.figure(figsize=(6, 6))
+    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+    plt.title(f"Seat Availability for {movie['movie']}")
+    plt.axis('equal')
+    plt.show()
 
+def generate_bar_chart(movies):
+    titles = [movie['movie'] for movie in movies]
+    booked_seats = [100 - movie['available_seats'] for movie in movies]
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(titles, booked_seats, color='skyblue')
+    plt.xlabel('Movies')
+    plt.ylabel('Number of Booked Seats')
+    plt.title('Booked Seats per Movie')
+    plt.xticks(rotation=45)
+    plt.show()
+
+    most_booked_movie = titles[booked_seats.index(max(booked_seats))]
+    print(f"The most booked movie is: {most_booked_movie}")
 
 def display_menu():
     print('Welcome to Book My Show!!')
